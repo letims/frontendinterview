@@ -1,0 +1,37 @@
+<main class="flights">
+  <h1>Vuelos</h1>
+  <input placeholder="Origen" (input)="origen.set($any($event.target).value)" />
+  <input placeholder="Destino" (input)="destino.set($any($event.target).value)" />
+  <select (change)="orden.set($any($event.target).value)">
+    <option value="asc">Precio: menor a mayor</option>
+    <option value="desc">Precio: mayor a menor</option>
+  </select>
+  @if (listadoVuelos().length === 0) {
+    <p>No hay vuelos disponibles.</p>
+  } @else {
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Origen</th>
+          <th>Destino</th>
+          <th>Asientos Disponibles</th>
+          <th>Precio</th>
+          <th>Estado</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (vuelo of listadoVuelos(); track vuelo.id) {
+          <tr>
+            <td>{{ vuelo.id }}</td>
+            <td>{{ vuelo.origen }}</td>
+            <td>{{ vuelo.destino }}</td>
+            <td>{{ vuelo.asientos }}</td>
+            <td>{{ vuelo.precio }}</td>
+            <td [class.agotado]="vuelo.asientos === 0">{{ vuelo.asientos === 0 ? 'Agotado' : 'Disponible' }}</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  }
+</main>
